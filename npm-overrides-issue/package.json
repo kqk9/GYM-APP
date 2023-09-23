@@ -12,7 +12,7 @@
   "dependencies": {
     "svg2sprite-cli": "^2.0.1"
   },
-  "overrides": {
-    "trim-newlines": "^3.0.1"
+"overrides": {
+    "trim-newlines": "^1.0.0"
   }
 }
