@@ -1,0 +1,104 @@
+<div class="container-fluid container-fluid-custom pb-5 mb-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h1>Hey , <%= name %></h1>
+        </div>
+        <form action="/dashboard" method="GET" class="position-relative  w-auto p-3 me-3 h-25">
+        <select  aria-label=".form-select-sm example" id="day" name="day" onchange="this.form.submit()">
+            <option selected>Day</option>
+            <option value="sunday">Sunday</option>
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+          </select>
+    </div>
+    <% if (user.week[locals.day].length === 0) {%>
+      <h5 class="card-header" ><%= locals.day %></h5>
+      <div class="row">
+        <div class="col mt-md-4">
+            <h2>Okay...</h2>
+            <h4>You don't have any axercise . You can add axercises from the button below  <br><br>
+            </h4>
+        </div>
+    </div>
+    <%}else{ %>
+  </form>
+      <div class="card">
+        <h5 class="card-header"><%= locals.day %></h5>
+        <% for (const exercise of user.week[locals.day]) { %>
+          <div class="card-body border-bottom">
+            <p class="card-text"><%= exercise.name %></p>
+            <div class="d-flex justify-content-between">
+              <a href="<%= exercise.link %>" type="button" class="btn btn-outline-danger" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-square-fill" viewBox="0 0 16 16">
+  <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.5 10a.5.5 0 0 0 .832.374l4.5-4a.5.5 0 0 0 0-.748l-4.5-4A.5.5 0 0 0 5.5 4v8z"></path>
+</svg>
+                Video
+</a>
+             <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-exercise-id="<%= exercise.id %> "data-exercise-day = "<%= locals.day %>">Delete</a>
+
+            </div>
+          </div>
+      <% } }%>
+      </div>
+
+      <div class="col text-end mt-5 ">
+        <a href="/dashboard/add" class="btn btn-primary" >+ New</a>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="deleteModal">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">You are about to delete an exercise</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <p>
+                      This will delete your exercise <br>
+                      Are you sure?
+                  </p>
+              </div>
+              <div class="modal-footer">
+                  
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-danger" onclick="redirectToDeleteLink()">Delete </button>
+                  
+              </div>
+          </div>
+      </div>
+  </div>
+  
+
+  <script>
+    let exerciseIdToDelete;
+    let dayToDelete ;
+  
+    document.addEventListener('DOMContentLoaded', function () {
+
+      $('#deleteModal').on('show.bs.modal', function (event) {
+   
+        const button = $(event.relatedTarget);
+        exerciseIdToDelete = button.data('exercise-id');
+        dayToDelete = button.data('exercise-day');
+      });
+    });
+  
+   
+    function redirectToDeleteLink() {
+  // POST
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = `/dashboard/delete/${dayToDelete}/${exerciseIdToDelete}`;
+  
+  // Adding the modal to the page
+  document.body.appendChild(form);
+  form.submit();
+}
+
+  </script>
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

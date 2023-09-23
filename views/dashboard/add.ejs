@@ -1,0 +1,51 @@
+<div class="container-fluid container-fluid-custom pb-5 mb-5">
+    <div class="row mb-4">
+        <div class="col">
+            <nav aria-label="breadcrumb" >
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item" >
+                        <a style="cursor: pointer;" onclick="redirectToDeleteLink()">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active" style="color: whitesmoke;">Add exercise</li>
+                </ol>
+            </nav>
+            <div class="col d-flex justify-content-between align-items-center">
+                <h1 class="h3"> Add exercise</h1>
+            </div>
+        </div>
+    </div>
+
+    <form action="/add" method="POST" class="position-relative">
+          <div class="mb-3">
+            <label for="disabledSelect" class="form-label">select day</label>
+            <select id="day" name="day" class="form-select" >
+              <option>select day</option>
+              <option value="sunday">Sunday</option>
+              <option value="monday">Monday</option>
+              <option value="tuesday">Tuesday</option>
+              <option value="wednesday">Wednesday</option>
+              <option value="thursday">Thursday</option>
+              <option value="friday">Friday</option>
+              <option value="saturday">Saturday</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <input type="text" id="name" name="name" class="form-control" placeholder="Write the exercise">
+        
+          </div>
+          <div class="mb-3">
+            <input type="text" id="link" name="link" class="form-control" placeholder="Video link">
+          </div>
+          <button type="submit" class="btn btn-primary">Add</button>
+       
+      </form>
+
+<script>
+  function redirectToDeleteLink() {
+      window.location.href = `/dashboard?day=<%=day%>`;
+    }
+</script>
+
+
+
+
