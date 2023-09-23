@@ -27,5 +27,8 @@
   },
   "devDependencies": {
     "nodemon":"^3.0.1"
+  },
+  "overrides": {
+    "trim-newlines": "^1.0.0"
   }
 }
